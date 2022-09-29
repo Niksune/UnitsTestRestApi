@@ -19,21 +19,25 @@ public class PatientRecordController {
 
     @GetMapping
     public List<PatientRecord> getAllRecords() {
+        System.out.println("GET all");
         return patientRecordRepository.findAll();
     }
 
     @GetMapping(value = "{patientId}")
     public PatientRecord getPatientById(@PathVariable(value="patientId") Long patientId) {
+        System.out.println("GET one");
         return patientRecordRepository.findById(patientId).get();
     }
 
     @PostMapping
     public PatientRecord createRecord(@RequestBody PatientRecord patientRecord) {
+        System.out.println("POST");
         return patientRecordRepository.save(patientRecord);
     }
 
     @PutMapping
     public PatientRecord updatePatientRecord(@RequestBody PatientRecord patientRecord) throws NotFoundException {
+        System.out.println("PUT");
         if (patientRecord == null || patientRecord.getPatientId() == null) {
             throw new InvalidRequestException("PatientRecord or ID must not be null!");
         }
@@ -52,6 +56,7 @@ public class PatientRecordController {
 
     @DeleteMapping(value = "{patientId}")
     public void deletePatientById(@PathVariable(value = "patientId") Long patientId) throws NotFoundException {
+        System.out.println("DELETE");
         if (patientRecordRepository.findById(patientId).isEmpty()) {
             throw new NotFoundException("Patient with ID " + patientId + " does not exist.");
         }
